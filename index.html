@@ -12,6 +12,8 @@
 </head>
 
 <body>
+  <audio src="./assets/music/Believer.mp3" id="song"></audio>
+
 
   <div class="player">
     <div class="art">
@@ -22,19 +24,23 @@
       <h2 class="header__subtitle">Tied Up feat. Stevan Kalmer</h2>
     </div>
     <div class="buttons">
-      <div class="btn btn--backward">
+      <div class="btn btn--previous">
         <i class="fas fa-backward "></i>
       </div>
       <div class="btn btn--play">
         <i class="fas fa-play"></i>
         <!-- <i class="fas fa-pause"></i> -->
       </div>
-      <div class="btn btn--forward">
+      <div class="btn btn--next">
         <i class="fas fa-forward"></i>
       </div>
     </div>
+    <div class="progress">
+      <input class="progress__bar" type="range" id="progress-bar" min="0" max="" value="0"
+        onchange="changeProgressBar()" />
+    </div>
   </div>
-
+  <script src="./script.js"></script>
 </body>
 
 </html>

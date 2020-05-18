@@ -90,3 +90,12 @@ body {
 .btn {
   font-size: 5rem;
 }
+
+.progress {
+  margin-top: 2rem;
+  align-self: stretch;
+
+  &__bar {
+    width: 100%;
+  }
+}
