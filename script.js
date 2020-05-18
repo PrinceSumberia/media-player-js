@@ -59,8 +59,9 @@ song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => {
   playSong("playBtn");
-  // progressBar.classList.toggle("progress__bar--show");
+  progressBar.classList.toggle("progress__bar--show");
   artImg.classList.toggle("art__img--animate");
+  range.classList.toggle("range--show");
 });
 
 nextButton.addEventListener("click", () => changeSong("next"));

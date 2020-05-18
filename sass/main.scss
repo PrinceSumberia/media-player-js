@@ -109,6 +109,7 @@ body {
   position: relative;
 
   &__bar {
+    opacity: 0;
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
@@ -143,14 +144,17 @@ body {
 }
 
 .range {
-  position: absolute;
-  border-radius: 1rem;
-  top: 0;
-  left: 0;
-  width: 10%;
-  height: 100%;
-  background-color: #ffffff;
+  &--show {
+    position: absolute;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    width: 10%;
+    height: 100%;
+    background-color: #ffffff;
+  }
 }
+
 
 @keyframes rotation {
   from {
