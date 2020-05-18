@@ -46,6 +46,11 @@ const changeSong = (action) => {
   playSong();
 };
 
+const updateProgressBar = () => {
+  progressBar.max = song.duration;
+  progressBar.value = song.currentTime;
+};
+
 song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => playSong("playBtn"));
@@ -53,3 +58,10 @@ playButton.addEventListener("click", () => playSong("playBtn"));
 nextButton.addEventListener("click", () => changeSong("next"));
 
 previousButton.addEventListener("click", () => changeSong("prev"));
+
+progressBar.addEventListener(
+  "change",
+  () => (song.currentTime = progressBar.value)
+);
+
+setInterval(updateProgressBar, 500);
