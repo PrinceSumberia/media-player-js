@@ -46,12 +46,14 @@ body {
   width: 35rem;
   margin-bottom: 2.5rem; }
   .art__img {
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     display: block;
     width: 100%;
     background-size: cover;
     object-fit: cover; }
+    .art__img--animate {
+      animation: rotation 1.5s linear; }
 
 .header {
   text-align: center; }
@@ -71,10 +73,57 @@ body {
   align-items: center; }
 
 .btn {
-  font-size: 5rem; }
+  font-size: 5rem;
+  color: rgba(255, 255, 255, 0.75); }
 
 .progress {
   margin-top: 2rem;
-  align-self: stretch; }
+  align-self: stretch;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: .7rem;
+  position: relative; }
   .progress__bar {
-    width: 100%; }
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-2rem);
+    transition: all .5s;
+    background-color: rgba(255, 255, 255, 0.5); }
+    .progress__bar--show {
+      opacity: 1;
+      transform: translateY(0); }
+  .progress__bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer; }
+  .progress__bar::-moz-range-thumb {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer; }
+
+.range {
+  position: absolute;
+  border-radius: 1rem;
+  top: 0;
+  left: 0;
+  width: 10%;
+  height: 100%;
+  background-color: #ffffff; }
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }

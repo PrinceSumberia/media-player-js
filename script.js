@@ -4,6 +4,8 @@ const nextButton = document.querySelector(".btn--next");
 const song = document.querySelector("#song");
 const playIcon = document.querySelector(".play");
 const progressBar = document.querySelector(".progress__bar");
+const artImg = document.querySelector(".art__img");
+const range = document.querySelector(".range");
 
 const songs = [
   "./assets/music/Believer.mp3",
@@ -49,19 +51,24 @@ const changeSong = (action) => {
 const updateProgressBar = () => {
   progressBar.max = song.duration;
   progressBar.value = song.currentTime;
+  let width = (progressBar.value / progressBar.max) * 100;
+  range.style.width = `${width}%`;
 };
 
 song.addEventListener("ended", () => changeSong("next"));
 
-playButton.addEventListener("click", () => playSong("playBtn"));
+playButton.addEventListener("click", () => {
+  playSong("playBtn");
+  // progressBar.classList.toggle("progress__bar--show");
+  artImg.classList.toggle("art__img--animate");
+});
 
 nextButton.addEventListener("click", () => changeSong("next"));
 
 previousButton.addEventListener("click", () => changeSong("prev"));
 
-progressBar.addEventListener(
-  "change",
-  () => (song.currentTime = progressBar.value)
-);
+progressBar.addEventListener("change", () => {
+  song.currentTime = progressBar.value;
+});
 
 setInterval(updateProgressBar, 500);
