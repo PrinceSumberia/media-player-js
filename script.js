@@ -1,3 +1,5 @@
+var jsmediatags = window.jsmediatags;
+
 const previousButton = document.querySelector(".btn--previous");
 const playButton = document.querySelector(".btn--play");
 const nextButton = document.querySelector(".btn--next");
@@ -6,6 +8,7 @@ const playIcon = document.querySelector(".play");
 const progressBar = document.querySelector(".progress__bar");
 const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
+const drop = document.querySelector(".drop");
 
 const songs = [
   "./assets/music/Believer.mp3",
@@ -14,10 +17,20 @@ const songs = [
   "./assets/music/Issues.mp3",
 ];
 
+jsmediatags.read("./assets/music/Believer.mp3", {
+  onSuccess: function (tag) {
+    console.log(tag);
+  },
+  onError: function (error) {
+    console.log(error);
+  },
+});
+
 let playing = false;
 let currentSongIndex = 0;
 
 const playSong = () => {
+  artImg.classList.toggle("art__img--animate");
   if (!playing) {
     song.play();
     playIcon.classList.add("fa-pause");
@@ -58,10 +71,13 @@ const updateProgressBar = () => {
 song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => {
-  playSong("playBtn");
+  playSong();
   progressBar.classList.toggle("progress__bar--show");
-  artImg.classList.toggle("art__img--animate");
+  drop.classList.toggle("drop--show");
   range.classList.toggle("range--show");
+  setTimeout(() => {
+    drop.classList.toggle("drop--hide");
+  }, 900);
 });
 
 nextButton.addEventListener("click", () => changeSong("next"));

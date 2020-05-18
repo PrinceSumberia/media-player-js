@@ -75,6 +75,26 @@ body {
 .btn {
   font-size: 5rem;
   color: rgba(255, 255, 255, 0.75); }
+  .btn--play {
+    position: relative; }
+
+.drop {
+  opacity: 0; }
+  .drop--show {
+    opacity: 1;
+    position: absolute;
+    left: 1.2rem;
+    bottom: 2rem;
+    border-radius: 10rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 1.7rem;
+    height: 1.7rem;
+    transform: translateY(5rem);
+    transition: all ease-in-out .5s; }
+  .drop--hide {
+    opacity: 0;
+    transition: none;
+    transform: translateY(0); }
 
 .progress {
   margin-top: 2rem;
@@ -89,15 +109,20 @@ body {
   .progress__bar {
     opacity: 0;
     -webkit-appearance: none;
+    height: 0;
+    width: 0;
     appearance: none;
-    width: 100%;
-    height: 100%;
-    transform: translateY(-2rem);
-    transition: all .5s;
+    transition: all 2s;
+    transition-delay: .5s;
+    transform-origin: center;
     background-color: rgba(255, 255, 255, 0.5); }
     .progress__bar--show {
-      opacity: 1;
-      transform: translateY(0); }
+      height: 100%;
+      width: 100%;
+      opacity: 1; }
+  .progress__bar:focus {
+    border: none;
+    outline: none; }
   .progress__bar::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -113,14 +138,19 @@ body {
     background: #fff;
     cursor: pointer; }
 
-.range--show {
-  position: absolute;
-  border-radius: 1rem;
-  top: 0;
-  left: 0;
-  width: 10%;
-  height: 100%;
-  background-color: #ffffff; }
+.range {
+  transition: opacity 2s;
+  transition-delay: 1s;
+  opacity: 0; }
+  .range--show {
+    opacity: 1;
+    position: absolute;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ffffff; }
 
 @keyframes rotation {
   from {
