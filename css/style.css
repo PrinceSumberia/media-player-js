@@ -5,7 +5,11 @@
   --swatch_4: #95a8de;
   --swatch_5: #3d8ce1;
   --swatch_6: #2350ce;
-  --swatch_7: #ba77cc; }
+  --swatch_7: #ba77cc;
+  --gradient-blue: linear-gradient(52deg, rgba(165, 219, 255, 1) 0%, rgba(231, 245, 254, 1) 95%);
+  --gradient-pink: linear-gradient(52deg, rgba(185, 118, 203, 1) 0%, rgba(149, 168, 222, 1) 95%);
+  --box-shadow-blue: 0 35rem 20rem 0rem rgba(159, 210, 251, .8);
+  --box-shadow-pink: 0 35rem 20rem 0rem rgba(149, 168, 222, .6); }
 
 *,
 *::before,
@@ -26,7 +30,7 @@ body {
   position: relative;
   min-height: 100vh;
   color: #fff;
-  background-image: linear-gradient(52deg, #a5dbff 0%, #e7f5fe 95%); }
+  background-image: var(--gradient-blue); }
 
 .player {
   position: absolute;
@@ -40,13 +44,13 @@ body {
   align-items: center;
   margin-top: 3rem;
   border-radius: 5rem;
-  box-shadow: 0 35rem 20rem 0rem rgba(159, 210, 251, 0.8); }
+  box-shadow: var(--box-shadow-blue); }
 
 .art {
   width: 35rem;
   margin-bottom: 2.5rem; }
   .art__img {
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     display: block;
     width: 100%;
@@ -93,6 +97,8 @@ body {
     transition: all ease-in-out .5s; }
 
 .progress {
+  perspective: 150rem;
+  -moz-perspective: 150rem;
   margin-top: 2rem;
   align-self: stretch;
   display: flex;

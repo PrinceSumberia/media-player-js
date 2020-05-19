@@ -1,5 +1,7 @@
 import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
 
+const body = document.getElementsByTagName("body")[0];
+const player = document.querySelector(".player");
 const songTitle = document.querySelector(".header__title");
 const songSubTitle = document.querySelector(".header__subtitle");
 const previousButton = document.querySelector(".btn--previous");
@@ -14,11 +16,10 @@ const drop = document.querySelector(".drop");
 
 let title, artist, image;
 const songs = [
-  "./assets/music/Toosie Slide.mp3",
   "./assets/music/Believer.mp3",
+  "./assets/music/Toosie Slide.mp3",
   "./assets/music/Closer.mp3",
   "./assets/music/DaBaby.mp3",
-  "/assets/music/Good Life.mp3",
   "./assets/music/Issues.mp3",
 ];
 
@@ -88,6 +89,16 @@ const updateProgressBar = () => {
   range.style.width = `${width}%`;
 };
 
+const changeStyles = (songIndex) => {
+  if (songIndex % 2 === 0) {
+    body.style.backgroundImage = `var(--gradient-pink)`;
+    player.style.boxShadow = `var(--box-shadow-pink)`;
+  } else {
+    body.style.backgroundImage = `var(--gradient-blue)`;
+    player.style.boxShadow = `var(--box-shadow-blue)`;
+  }
+};
+
 song.src = songs[0];
 let isPaused = true;
 let currentSongIndex = 0;
@@ -103,7 +114,6 @@ playButton.addEventListener("click", () => {
   });
 
   if (progressBar.classList.contains("progress__bar--show") === false) {
-    console.log(range.classList);
     range.classList.remove("range--show");
   }
   artImg.classList.add("art__img--animate");
@@ -120,10 +130,14 @@ playButton.addEventListener("click", () => {
 });
 
 nextButton.addEventListener("click", () => {
+  changeStyles(Number(currentSongIndex));
   changeSong("next");
 });
 
-previousButton.addEventListener("click", () => changeSong("prev"));
+previousButton.addEventListener("click", () => {
+  changeStyles(Number(currentSongIndex));
+  changeSong("prev");
+});
 
 progressBar.addEventListener("change", () => {
   song.currentTime = progressBar.value;
