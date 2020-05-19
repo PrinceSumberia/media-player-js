@@ -9,19 +9,20 @@ const progressBar = document.querySelector(".progress__bar");
 const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
+const imgCover = document.querySelector("#img-cover");
 
 import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
 
-let title, artist;
+let title, artist, image;
 const getMetaData = async (url) => {
   return await id3.fromUrl(url);
 };
 
 const songs = [
-  "./assets/music/Toosie Slide.mp3",
-  "./assets/music/DaBaby.mp3",
   "./assets/music/Believer.mp3",
+  "./assets/music/Toosie Slide.mp3",
   "./assets/music/Closer.mp3",
+  "./assets/music/DaBaby.mp3",
   "/assets/music/Good Life.mp3",
   "./assets/music/Issues.mp3",
 ];
@@ -30,52 +31,30 @@ song.src = songs[0];
 
 const loadData = (songIndex) => {
   const result = getMetaData(songs[Number(songIndex)]);
+  artImg.src = "images/cover.jpg";
   result.then((metaData) => {
     title = metaData.title;
     artist = metaData.artist;
+    image = metaData.images[0].data;
     const newTitle = title.slice(0, title.search(/-|\(/));
     songTitle.innerText = newTitle;
     songSubTitle.innerText = artist;
+    let imageUrl;
+    try {
+      let arrayBufferView = new Uint8Array(image);
+      let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+      let urlCreator = window.URL || window.webkitURL;
+      imageUrl = urlCreator.createObjectURL(blob);
+      artImg.setAttribute("src", imageUrl);
+    } catch (e) {}
   });
 };
 
 loadData(0);
-
-// album: "Best of April 2020"
-// artist: "Drake"
-// comments: "www.SongsLover.com"
-// composer: "Aubrey Graham & O. Yildirim"
-// conductor: "www.SongsLover.com"
-// content-group: "www.SongsLover.com"
-// copyright: "www.SongsLover.com"
-// encoder: "www.SongsLover.com"
-// frames: (25) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-// images: [{…}]
-// kind: "v2"
-// original-album: "www.SongsLover.com"
-// original-artist: "www.SongsLover.com"
-// original-writer: "www.SongsLover.com"
-// publisher: "www.SongsLover.com"
-// radio-name: "www.SongsLover.com"
-// release-time: "www.SongsLover.com"
-// remixer: "www.SongsLover.com"
-// subtitle: "www.SongsLover.com"
-// title: "Toosie Slide - SongsLover.com"
-// track: "1/20"
-// url-artist: "www.SongsLover.com"
-// url-commercial: "www.SongsLover.com"
-// url-file: "www.SongsLover.com"
-// url-radio: "www.SongsLover.com"
-// url-source: "www.SongsLover.com"
-// version: (2) [3, 0]
-// writer: "www.SongsLover.com"
-// year: "2020"
-
 let playing = false;
 let currentSongIndex = 0;
 
 const playSong = () => {
-  // getMetaData(songs[currentSongIndex]);
   loadData(currentSongIndex);
   artImg.classList.toggle("art__img--animate");
   if (!playing) {
