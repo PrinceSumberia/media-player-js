@@ -1,3 +1,5 @@
+import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
+
 const songTitle = document.querySelector(".header__title");
 const songSubTitle = document.querySelector(".header__subtitle");
 const previousButton = document.querySelector(".btn--previous");
@@ -9,25 +11,20 @@ const progressBar = document.querySelector(".progress__bar");
 const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
-const imgCover = document.querySelector("#img-cover");
-
-import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
 
 let title, artist, image;
-const getMetaData = async (url) => {
-  return await id3.fromUrl(url);
-};
-
 const songs = [
-  "./assets/music/Believer.mp3",
   "./assets/music/Toosie Slide.mp3",
+  "./assets/music/Believer.mp3",
   "./assets/music/Closer.mp3",
   "./assets/music/DaBaby.mp3",
   "/assets/music/Good Life.mp3",
   "./assets/music/Issues.mp3",
 ];
 
-song.src = songs[0];
+const getMetaData = async (url) => {
+  return await id3.fromUrl(url);
+};
 
 const loadData = (songIndex) => {
   const result = getMetaData(songs[Number(songIndex)]);
@@ -35,12 +32,13 @@ const loadData = (songIndex) => {
   result.then((metaData) => {
     title = metaData.title;
     artist = metaData.artist;
-    image = metaData.images[0].data;
     const newTitle = title.slice(0, title.search(/-|\(/));
+    const newArtist = artist.slice(0, artist.search(/\(/));
     songTitle.innerText = newTitle;
-    songSubTitle.innerText = artist;
+    songSubTitle.innerText = newArtist;
     let imageUrl;
     try {
+      image = metaData.images[0].data;
       let arrayBufferView = new Uint8Array(image);
       let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
       let urlCreator = window.URL || window.webkitURL;
@@ -50,23 +48,18 @@ const loadData = (songIndex) => {
   });
 };
 
-loadData(0);
-let playing = false;
-let currentSongIndex = 0;
-
 const playSong = () => {
   loadData(currentSongIndex);
-  artImg.classList.toggle("art__img--animate");
-  if (!playing) {
+  if (isPaused) {
     song.play();
     playIcon.classList.add("fa-pause");
     playIcon.classList.remove("fa-play");
-    playing = true;
+    isPaused = false;
   } else {
     song.pause();
     playIcon.classList.remove("fa-pause");
     playIcon.classList.add("fa-play");
-    playing = false;
+    isPaused = true;
   }
 };
 
@@ -82,9 +75,10 @@ const changeSong = (action) => {
     nextSong = currentSongIndex === 0 ? songs[0] : songs[currentSongIndex - 1];
     currentSongIndex = songs.indexOf(nextSong);
   }
-  playing = false;
   song.src = nextSong;
+  isPaused = !isPaused;
   playSong();
+  artImg.classList.toggle("art__img--animate");
 };
 
 const updateProgressBar = () => {
@@ -93,6 +87,11 @@ const updateProgressBar = () => {
   let width = (progressBar.value / progressBar.max) * 100;
   range.style.width = `${width}%`;
 };
+
+song.src = songs[0];
+let isPaused = true;
+let currentSongIndex = 0;
+loadData(0);
 
 song.addEventListener("ended", () => changeSong("next"));
 
