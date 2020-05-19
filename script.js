@@ -79,7 +79,10 @@ const changeSong = (action) => {
   song.src = nextSong;
   isPaused = !isPaused;
   playSong();
-  artImg.classList.toggle("art__img--animate");
+  artImg.classList.add("art__img--animate");
+  artImg.addEventListener("animationend", () => {
+    artImg.classList.remove("art__img--animate");
+  });
 };
 
 const updateProgressBar = () => {
@@ -116,13 +119,14 @@ playButton.addEventListener("click", () => {
   if (progressBar.classList.contains("progress__bar--show") === false) {
     range.classList.remove("range--show");
   }
-  artImg.classList.add("art__img--animate");
-  artImg.addEventListener("animationend", () => {
-    artImg.classList.remove("art__img--animate");
-  });
 
   if (!isPaused) {
+    artImg.classList.add("art__img--animate");
     drop.classList.add("drop--show");
+
+    artImg.addEventListener("animationend", () => {
+      artImg.classList.remove("art__img--animate");
+    });
     drop.addEventListener("transitionend", () => {
       drop.classList.remove("drop--show");
     });
