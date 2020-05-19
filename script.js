@@ -1,5 +1,3 @@
-var jsmediatags = window.jsmediatags;
-
 const previousButton = document.querySelector(".btn--previous");
 const playButton = document.querySelector(".btn--play");
 const nextButton = document.querySelector(".btn--next");
@@ -10,26 +8,61 @@ const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
 
+import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
+
+// let title,
+const getMetaData = (url) => {
+  id3.fromUrl(url).then((tags) => {
+    console.log(tags);
+  });
+};
+
 const songs = [
+  "./assets/music/DaBaby.mp3",
   "./assets/music/Believer.mp3",
+  "./assets/music/Toosie Slide.mp3",
   "./assets/music/Closer.mp3",
   "/assets/music/Good Life.mp3",
   "./assets/music/Issues.mp3",
 ];
 
-jsmediatags.read("./assets/music/Believer.mp3", {
-  onSuccess: function (tag) {
-    console.log(tag);
-  },
-  onError: function (error) {
-    console.log(error);
-  },
-});
+song.src = songs[0];
+
+// album: "Best of April 2020"
+// artist: "Drake"
+// comments: "www.SongsLover.com"
+// composer: "Aubrey Graham & O. Yildirim"
+// conductor: "www.SongsLover.com"
+// content-group: "www.SongsLover.com"
+// copyright: "www.SongsLover.com"
+// encoder: "www.SongsLover.com"
+// frames: (25) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// images: [{…}]
+// kind: "v2"
+// original-album: "www.SongsLover.com"
+// original-artist: "www.SongsLover.com"
+// original-writer: "www.SongsLover.com"
+// publisher: "www.SongsLover.com"
+// radio-name: "www.SongsLover.com"
+// release-time: "www.SongsLover.com"
+// remixer: "www.SongsLover.com"
+// subtitle: "www.SongsLover.com"
+// title: "Toosie Slide - SongsLover.com"
+// track: "1/20"
+// url-artist: "www.SongsLover.com"
+// url-commercial: "www.SongsLover.com"
+// url-file: "www.SongsLover.com"
+// url-radio: "www.SongsLover.com"
+// url-source: "www.SongsLover.com"
+// version: (2) [3, 0]
+// writer: "www.SongsLover.com"
+// year: "2020"
 
 let playing = false;
 let currentSongIndex = 0;
 
 const playSong = () => {
+  getMetaData(songs[currentSongIndex]);
   artImg.classList.toggle("art__img--animate");
   if (!playing) {
     song.play();

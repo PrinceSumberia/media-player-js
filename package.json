@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jsmediatags": "^3.9.3",
     "node-sass": "^4.14.1"
   }
 }
