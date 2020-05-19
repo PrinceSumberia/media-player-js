@@ -102,11 +102,15 @@ playButton.addEventListener("click", () => {
   artImg.addEventListener("animationend", () => {
     artImg.classList.remove("art__img--animate");
   });
-  drop.classList.toggle("drop--show");
+
+  if (!isPaused) {
+    drop.classList.add("drop--show");
+    drop.addEventListener("transitionend", () => {
+      drop.classList.remove("drop--show");
+    });
+  }
+
   range.classList.toggle("range--show");
-  setTimeout(() => {
-    drop.classList.toggle("drop--hide");
-  }, 900);
 });
 
 nextButton.addEventListener("click", () => {

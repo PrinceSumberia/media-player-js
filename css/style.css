@@ -91,10 +91,6 @@ body {
     height: 1.7rem;
     transform: translateY(5rem);
     transition: all ease-in-out .5s; }
-  .drop--hide {
-    opacity: 0;
-    transition: none;
-    transform: translateY(0); }
 
 .progress {
   margin-top: 2rem;
