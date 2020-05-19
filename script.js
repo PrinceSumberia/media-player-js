@@ -1,3 +1,5 @@
+const songTitle = document.querySelector(".header__title");
+const songSubTitle = document.querySelector(".header__subtitle");
 const previousButton = document.querySelector(".btn--previous");
 const playButton = document.querySelector(".btn--play");
 const nextButton = document.querySelector(".btn--next");
@@ -10,23 +12,34 @@ const drop = document.querySelector(".drop");
 
 import * as id3 from "//unpkg.com/id3js@^2/lib/id3.js";
 
-// let title,
-const getMetaData = (url) => {
-  id3.fromUrl(url).then((tags) => {
-    console.log(tags);
-  });
+let title, artist;
+const getMetaData = async (url) => {
+  return await id3.fromUrl(url);
 };
 
 const songs = [
+  "./assets/music/Toosie Slide.mp3",
   "./assets/music/DaBaby.mp3",
   "./assets/music/Believer.mp3",
-  "./assets/music/Toosie Slide.mp3",
   "./assets/music/Closer.mp3",
   "/assets/music/Good Life.mp3",
   "./assets/music/Issues.mp3",
 ];
 
 song.src = songs[0];
+
+const loadData = (songIndex) => {
+  const result = getMetaData(songs[Number(songIndex)]);
+  result.then((metaData) => {
+    title = metaData.title;
+    artist = metaData.artist;
+    const newTitle = title.slice(0, title.search(/-|\(/));
+    songTitle.innerText = newTitle;
+    songSubTitle.innerText = artist;
+  });
+};
+
+loadData(0);
 
 // album: "Best of April 2020"
 // artist: "Drake"
@@ -62,7 +75,8 @@ let playing = false;
 let currentSongIndex = 0;
 
 const playSong = () => {
-  getMetaData(songs[currentSongIndex]);
+  // getMetaData(songs[currentSongIndex]);
+  loadData(currentSongIndex);
   artImg.classList.toggle("art__img--animate");
   if (!playing) {
     song.play();
