@@ -98,6 +98,10 @@ song.addEventListener("ended", () => changeSong("next"));
 playButton.addEventListener("click", () => {
   playSong();
   progressBar.classList.toggle("progress__bar--show");
+  artImg.classList.add("art__img--animate");
+  artImg.addEventListener("animationend", () => {
+    artImg.classList.remove("art__img--animate");
+  });
   drop.classList.toggle("drop--show");
   range.classList.toggle("range--show");
   setTimeout(() => {
@@ -105,7 +109,9 @@ playButton.addEventListener("click", () => {
   }, 900);
 });
 
-nextButton.addEventListener("click", () => changeSong("next"));
+nextButton.addEventListener("click", () => {
+  changeSong("next");
+});
 
 previousButton.addEventListener("click", () => changeSong("prev"));
 
