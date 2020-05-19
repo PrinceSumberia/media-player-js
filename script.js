@@ -98,6 +98,14 @@ song.addEventListener("ended", () => changeSong("next"));
 playButton.addEventListener("click", () => {
   playSong();
   progressBar.classList.toggle("progress__bar--show");
+  progressBar.addEventListener("transitionend", () => {
+    range.classList.toggle("range--show");
+  });
+
+  if (progressBar.classList.contains("progress__bar--show") === false) {
+    console.log(range.classList);
+    range.classList.remove("range--show");
+  }
   artImg.classList.add("art__img--animate");
   artImg.addEventListener("animationend", () => {
     artImg.classList.remove("art__img--animate");
@@ -109,8 +117,6 @@ playButton.addEventListener("click", () => {
       drop.classList.remove("drop--show");
     });
   }
-
-  range.classList.toggle("range--show");
 });
 
 nextButton.addEventListener("click", () => {
