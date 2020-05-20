@@ -17,10 +17,10 @@ const audioFile = document.querySelector(".audio_files");
 
 let title, artist, image;
 let songs = [
-  "./assets/music/Believer.mp3",
+  // "./assets/music/Believer.mp3",
   // "./assets/music/Toosie Slide.mp3",
   // "./assets/music/Closer.mp3",
-  // "./assets/music/DaBaby.mp3",
+  "./assets/music/DaBaby.mp3",
   // "./assets/music/Issues.mp3",
 ];
 
@@ -62,7 +62,7 @@ const loadData = (songIndex) => {
 };
 
 const playSong = () => {
-  loadData(currentSongIndex);
+  // loadData(currentSongIndex);
   if (isPaused) {
     song.play();
     playIcon.classList.add("fa-pause");
@@ -88,8 +88,11 @@ const changeSong = (action) => {
     nextSong = currentSongIndex === 0 ? songs[0] : songs[currentSongIndex - 1];
     currentSongIndex = songs.indexOf(nextSong);
   }
-  song.src = nextSong;
   isPaused = !isPaused;
+  song.src = nextSong.url;
+  artImg.setAttribute("src", nextSong.imageSrc);
+  songTitle.innerText = nextSong.title;
+  songSubTitle.innerText = nextSong.artist;
   playSong();
   artImg.classList.add("art__img--animate");
   artImg.addEventListener("animationend", () => {
@@ -121,23 +124,21 @@ loadData(0);
 
 audioFile.addEventListener("change", (e) => {
   let files = e.target.files;
-  const filesArray = [];
   for (const file of files) {
     const result = getMetaData(file);
     result.then((data) => {
-      console.log(data.artist);
-      console.log(data.artist.search(/\(/));
-      filesArray.push({
+      songs.push({
         title: data.title.slice(0, data.title.search(/-|\(/)).trim(),
-        artist: data.artist.slice(0, data.artist.search(/\(/) || 0).trim(),
+        artist:
+          data.artist.search(/\(/) === -1
+            ? data.artist
+            : data.artist.slice(0, data.artist.search(/\(/)).trim(),
         url: URL.createObjectURL(file),
         image: data.images[0].data,
         imageSrc: getSongImage(data.images[0].data),
       });
     });
   }
-  console.log(filesArray);
-  songs = [...filesArray, ...songs];
 });
 
 song.addEventListener("ended", () => changeSong("next"));
