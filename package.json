@@ -1,0 +1,23 @@
+{
+  "name": "media-player-js",
+  "version": "1.0.0",
+  "description": "Link: https://jsmediaplayer.netlify.app/",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrinceSumberia/media-player-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PrinceSumberia/media-player-js/issues"
+  },
+  "homepage": "https://github.com/PrinceSumberia/media-player-js#readme",
+  "devDependencies": {
+    "node-sass": "^4.14.1"
+  }
+}
