@@ -16,13 +16,7 @@ const drop = document.querySelector(".drop");
 const audioFile = document.querySelector(".audio_files");
 
 let title, artist, image;
-let songs = [
-  // "./assets/music/Believer.mp3",
-  // "./assets/music/Toosie Slide.mp3",
-  // "./assets/music/Closer.mp3",
-  "./assets/music/DaBaby.mp3",
-  // "./assets/music/Issues.mp3",
-];
+let songs = [];
 
 const getMetaData2 = async (file) => {
   return await id3.fromUrl(file);
@@ -62,6 +56,7 @@ const loadData = (songIndex) => {
 };
 
 const playSong = () => {
+  startPlaying();
   // loadData(currentSongIndex);
   if (isPaused) {
     song.play();
@@ -117,10 +112,17 @@ const changeStyles = (songIndex) => {
   }
 };
 
-song.src = songs[0];
 let isPaused = true;
 let currentSongIndex = 0;
-loadData(0);
+const startPlaying = () => {
+  let currentSong = songs[currentSongIndex];
+  song.src = currentSong.url;
+  artImg.setAttribute("src", currentSong.imageSrc);
+  songTitle.innerText = currentSong.title;
+  songSubTitle.innerText = currentSong.artist;
+};
+
+// loadData(0);
 
 audioFile.addEventListener("change", (e) => {
   let files = e.target.files;
@@ -139,6 +141,7 @@ audioFile.addEventListener("change", (e) => {
       });
     });
   }
+  startPlaying();
 });
 
 song.addEventListener("ended", () => changeSong("next"));
