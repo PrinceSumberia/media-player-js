@@ -13,22 +13,34 @@ const progressBar = document.querySelector(".progress__bar");
 const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
+const audioFile = document.querySelector(".audio_files");
 
 let title, artist, image;
-const songs = [
+let songs = [
   "./assets/music/Believer.mp3",
-  "./assets/music/Toosie Slide.mp3",
-  "./assets/music/Closer.mp3",
-  "./assets/music/DaBaby.mp3",
-  "./assets/music/Issues.mp3",
+  // "./assets/music/Toosie Slide.mp3",
+  // "./assets/music/Closer.mp3",
+  // "./assets/music/DaBaby.mp3",
+  // "./assets/music/Issues.mp3",
 ];
 
-const getMetaData = async (url) => {
-  return await id3.fromUrl(url);
+const getMetaData2 = async (file) => {
+  return await id3.fromUrl(file);
+};
+
+const getMetaData = async (file) => {
+  return await id3.fromFile(file);
+};
+
+const getSongImage = (arrayBuffer) => {
+  let arrayBufferView = new Uint8Array(arrayBuffer);
+  let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+  let urlCreator = window.URL || window.webkitURL;
+  return urlCreator.createObjectURL(blob);
 };
 
 const loadData = (songIndex) => {
-  const result = getMetaData(songs[Number(songIndex)]);
+  const result = getMetaData2(songs[Number(songIndex)]);
   artImg.src = "images/cover.jpg";
   result.then((metaData) => {
     title = metaData.title;
@@ -106,6 +118,27 @@ song.src = songs[0];
 let isPaused = true;
 let currentSongIndex = 0;
 loadData(0);
+
+audioFile.addEventListener("change", (e) => {
+  let files = e.target.files;
+  const filesArray = [];
+  for (const file of files) {
+    const result = getMetaData(file);
+    result.then((data) => {
+      console.log(data.artist);
+      console.log(data.artist.search(/\(/));
+      filesArray.push({
+        title: data.title.slice(0, data.title.search(/-|\(/)).trim(),
+        artist: data.artist.slice(0, data.artist.search(/\(/) || 0).trim(),
+        url: URL.createObjectURL(file),
+        image: data.images[0].data,
+        imageSrc: getSongImage(data.images[0].data),
+      });
+    });
+  }
+  console.log(filesArray);
+  songs = [...filesArray, ...songs];
+});
 
 song.addEventListener("ended", () => changeSong("next"));
 
