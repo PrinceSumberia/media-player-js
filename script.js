@@ -14,6 +14,7 @@ const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
 const audioFile = document.querySelector(".audio_files");
+const fileList = document.querySelector(".file_list");
 
 let title, artist, image;
 let songs = [];
@@ -129,18 +130,21 @@ audioFile.addEventListener("change", (e) => {
   for (const file of files) {
     const result = getMetaData(file);
     result.then((data) => {
+      let title = data.title.slice(0, data.title.search(/-|\(/)).trim();
+      let artist =
+        data.artist.search(/\(/) === -1
+          ? data.artist
+          : data.artist.slice(0, data.artist.search(/\(/)).trim();
       songs.push({
-        title: data.title.slice(0, data.title.search(/-|\(/)).trim(),
-        artist:
-          data.artist.search(/\(/) === -1
-            ? data.artist
-            : data.artist.slice(0, data.artist.search(/\(/)).trim(),
+        title,
+        artist,
         url: URL.createObjectURL(file),
-        image: data.images[0].data,
         imageSrc: getSongImage(data.images[0].data),
       });
+      fileList.insertAdjacentHTML("beforeend", `<li>${title}</li>`);
     });
   }
+  console.log(songs);
   startPlaying();
 });
 
