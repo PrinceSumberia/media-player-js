@@ -37,6 +37,19 @@ body {
   background-image: var(--gradient-blue);
 }
 
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.files_container {
+  padding: 2rem;
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
 .player {
   position: absolute;
   top: 45%;
@@ -203,6 +216,9 @@ body {
 
 .audio_files {
   color: transparent;
+  outline: none;
+  border: none;
+  margin: 1.5rem 0;
 }
 
 .audio_files::-webkit-file-upload-button {
@@ -231,4 +247,11 @@ body {
 
 .audio_files:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.file_list {
+  padding: 2rem;
+  background-color: black;
+  list-style: none;
+  flex: 1;
 }
