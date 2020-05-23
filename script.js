@@ -119,7 +119,10 @@ audioFile.addEventListener("change", (e) => {
     result
       .then((data) => {
         console.log(getSongImage(data.images[0].data));
-        let title = data.title.slice(0, data.title.search(/-|\(/)).trim();
+        let title = data.title
+          .slice(0, data.title.search(/ft|FT|fT|Ft|-|\(/))
+          .trim()
+          .toLowerCase();
         let artist =
           data.artist.search(/\(/) === -1
             ? data.artist

@@ -77,8 +77,10 @@ body {
   .header__title {
     font-size: 3rem;
     font-weight: 900;
+    text-transform: uppercase;
     letter-spacing: .1rem; }
   .header__subtitle {
+    text-transform: capitalize;
     margin-top: -.5rem;
     font-weight: 300; }
 
@@ -206,6 +208,7 @@ body {
   flex: 1;
   border: 1px solid black; }
   .filelist__item {
+    text-transform: capitalize;
     width: 100%;
     padding: .5rem 2rem;
     background-color: rgba(97, 173, 243, 0.5);
