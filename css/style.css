@@ -121,9 +121,13 @@ body {
 
 .btn {
   font-size: 5rem;
+  opacity: 50%;
   color: rgba(255, 255, 255, 0.75); }
   .btn--play {
+    opacity: 100%;
     position: relative; }
+  .btn:hover {
+    opacity: 100%; }
 
 .drop {
   opacity: 0; }

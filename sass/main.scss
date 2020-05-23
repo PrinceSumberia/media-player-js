@@ -148,10 +148,16 @@ body {
 
 .btn {
   font-size: 5rem;
+  opacity: 50%;
   color: rgba($color: #ffffff, $alpha: .75);
 
   &--play {
+    opacity: 100%;
     position: relative;
+  }
+
+  &:hover {
+    opacity: 100%;
   }
 }
 
