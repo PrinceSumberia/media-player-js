@@ -14,7 +14,8 @@ const artImg = document.querySelector(".art__img");
 const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
 const audioFile = document.querySelector(".audio_files");
-const fileList = document.querySelector(".file_list");
+const fileList = document.querySelector(".filelist");
+const fileItem = document.querySelector(".filelist__item");
 
 let title, artist, image;
 let songs = [];
@@ -58,7 +59,6 @@ const loadData = (songIndex) => {
 
 const playSong = () => {
   startPlaying();
-  // loadData(currentSongIndex);
   if (isPaused) {
     song.play();
     playIcon.classList.add("fa-pause");
@@ -141,7 +141,11 @@ audioFile.addEventListener("change", (e) => {
         url: URL.createObjectURL(file),
         imageSrc: getSongImage(data.images[0].data),
       });
-      fileList.insertAdjacentHTML("beforeend", `<li>${title}</li>`);
+      console.log(songs.length);
+      fileList.insertAdjacentHTML(
+        "beforeend",
+        `<li class="filelist__item" id=${songs.length - 1}>${title}</li>`
+      );
     });
   }
   console.log(songs);
@@ -152,6 +156,7 @@ song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => {
   playSong();
+
   progressBar.classList.toggle("progress__bar--show");
   progressBar.addEventListener("transitionend", () => {
     range.classList.toggle("range--show");
@@ -186,6 +191,12 @@ previousButton.addEventListener("click", () => {
 
 progressBar.addEventListener("change", () => {
   song.currentTime = progressBar.value;
+});
+
+fileList.addEventListener("click", (e) => {
+  currentSongIndex = Number(e.target.id);
+  isPaused = true;
+  playSong();
 });
 
 setInterval(updateProgressBar, 500);

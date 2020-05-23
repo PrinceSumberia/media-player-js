@@ -198,8 +198,16 @@ body {
 .audio_files:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); }
 
-.file_list {
+.filelist {
   padding: 2rem;
-  background-color: black;
   list-style: none;
-  flex: 1; }
+  flex: 1;
+  border: 1px solid black; }
+  .filelist__item {
+    width: 100%;
+    padding: .5rem 2rem;
+    background-color: rgba(97, 173, 243, 0.5);
+    border-radius: 1rem;
+    margin: 1rem 0; }
+    .filelist__item:hover {
+      background-color: #61adf3; }
