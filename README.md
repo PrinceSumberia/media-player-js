@@ -4,9 +4,9 @@
 
 Link: https://jsmediaplayer.netlify.app/
 
-<span align="center">
+<p align="center">
   <img src="./assets/img-1.png" width="90%">
-</span>
-<span align="center">
+</p>
+<p align="center">
   <img src="./assets/img-2.png" width="90%">
-</span>
+</p>
