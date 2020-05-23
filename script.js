@@ -17,14 +17,9 @@ const audioFile = document.querySelector(".audio_files");
 const fileList = document.querySelector(".filelist");
 const fileItem = document.querySelector(".filelist__item");
 
-let title, artist, image;
 let songs = [];
 let isPaused = true;
 let currentSongIndex = 0;
-
-const getMetaData2 = async (file) => {
-  return await id3.fromUrl(file);
-};
 
 const getMetaData = async (file) => {
   return await id3.fromFile(file);
@@ -37,37 +32,13 @@ const getSongImage = (arrayBuffer) => {
   return urlCreator.createObjectURL(blob);
 };
 
-const loadData = (songIndex) => {
-  const result = getMetaData2(songs[Number(songIndex)]);
-  artImg.src = "images/cover.jpg";
-  result.then((metaData) => {
-    title = metaData.title;
-    artist = metaData.artist;
-    const newTitle = title.slice(0, title.search(/-|\(/));
-    const newArtist = artist.slice(0, artist.search(/\(/));
-    songTitle.innerText = newTitle;
-    songSubTitle.innerText = newArtist;
-    let imageUrl;
-    try {
-      image = metaData.images[0].data;
-      let arrayBufferView = new Uint8Array(image);
-      let blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-      let urlCreator = window.URL || window.webkitURL;
-      imageUrl = urlCreator.createObjectURL(blob);
-      artImg.setAttribute("src", imageUrl);
-    } catch (e) {}
-  });
-};
-
 const playSong = () => {
-  // startPlaying();
   if (isPaused) {
     song.play();
     progressBar.classList.add("progress__bar--show");
     playIcon.classList.add("fa-pause");
     artImg.classList.add("art__img--animate");
     drop.classList.add("drop--show");
-
     playIcon.classList.remove("fa-play");
     progressBar.addEventListener("transitionend", () => {
       range.classList.add("range--show");
@@ -81,11 +52,11 @@ const playSong = () => {
     isPaused = false;
   } else {
     song.pause();
+    isPaused = true;
+    playIcon.classList.add("fa-play");
     progressBar.classList.remove("progress__bar--show");
     playIcon.classList.remove("fa-pause");
-    playIcon.classList.add("fa-play");
     range.classList.remove("range--show");
-    isPaused = true;
   }
 };
 
@@ -147,6 +118,7 @@ audioFile.addEventListener("change", (e) => {
     const result = getMetaData(file);
     result
       .then((data) => {
+        console.log(getSongImage(data.images[0].data));
         let title = data.title.slice(0, data.title.search(/-|\(/)).trim();
         let artist =
           data.artist.search(/\(/) === -1

@@ -59,12 +59,14 @@ body {
 
 .art {
   width: 35rem;
+  height: 35rem;
   margin-bottom: 2.5rem; }
   .art__img {
     box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     display: block;
     width: 100%;
+    height: 100%;
     background-size: cover;
     object-fit: cover; }
     .art__img--animate {
