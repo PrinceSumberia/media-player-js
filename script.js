@@ -16,6 +16,8 @@ const drop = document.querySelector(".drop");
 const audioFile = document.querySelector(".audio_files");
 const fileList = document.querySelector(".filelist");
 const fileItem = document.querySelector(".filelist__item");
+const fileListContainer = document.querySelector(".files_container");
+const filesViewToggle = document.querySelector(".files__toggle");
 
 let songs = [];
 let isPaused = true;
@@ -166,6 +168,12 @@ previousButton.addEventListener("click", () => {
 
 progressBar.addEventListener("change", () => {
   song.currentTime = progressBar.value;
+});
+
+filesViewToggle.addEventListener("click", () => {
+  filesViewToggle.classList.toggle("fa-plus-circle");
+  filesViewToggle.classList.toggle("fa-minus-circle");
+  fileListContainer.classList.toggle("files_container--show");
 });
 
 fileList.addEventListener("click", (e) => {
