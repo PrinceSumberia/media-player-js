@@ -57,17 +57,52 @@ const loadData = (songIndex) => {
   });
 };
 
+// progressBar.classList.toggle("progress__bar--show");
+// progressBar.addEventListener("transitionend", () => {
+//   range.classList.toggle("range--show");
+// });
+
+// if (progressBar.classList.contains("progress__bar--show") === false) {
+//   range.classList.remove("range--show");
+// }
+
+// if (!isPaused) {
+//   artImg.classList.add("art__img--animate");
+
+//   artImg.addEventListener("animationend", () => {
+//     artImg.classList.remove("art__img--animate");
+//   });
+//   drop.addEventListener("transitionend", () => {
+//     drop.classList.remove("drop--show");
+//   });
+// }
+
 const playSong = () => {
   startPlaying();
   if (isPaused) {
     song.play();
+    progressBar.classList.add("progress__bar--show");
     playIcon.classList.add("fa-pause");
+    artImg.classList.add("art__img--animate");
+    drop.classList.add("drop--show");
+
     playIcon.classList.remove("fa-play");
+    progressBar.addEventListener("transitionend", () => {
+      range.classList.add("range--show");
+    });
+    artImg.addEventListener("animationend", () => {
+      artImg.classList.remove("art__img--animate");
+    });
+    drop.addEventListener("transitionend", () => {
+      drop.classList.remove("drop--show");
+    });
     isPaused = false;
   } else {
     song.pause();
+    progressBar.classList.remove("progress__bar--show");
     playIcon.classList.remove("fa-pause");
     playIcon.classList.add("fa-play");
+    range.classList.remove("range--show");
     isPaused = true;
   }
 };
@@ -141,14 +176,12 @@ audioFile.addEventListener("change", (e) => {
         url: URL.createObjectURL(file),
         imageSrc: getSongImage(data.images[0].data),
       });
-      console.log(songs.length);
       fileList.insertAdjacentHTML(
         "beforeend",
         `<li class="filelist__item" id=${songs.length - 1}>${title}</li>`
       );
     });
   }
-  console.log(songs);
   startPlaying();
 });
 
@@ -156,27 +189,6 @@ song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => {
   playSong();
-
-  progressBar.classList.toggle("progress__bar--show");
-  progressBar.addEventListener("transitionend", () => {
-    range.classList.toggle("range--show");
-  });
-
-  if (progressBar.classList.contains("progress__bar--show") === false) {
-    range.classList.remove("range--show");
-  }
-
-  if (!isPaused) {
-    artImg.classList.add("art__img--animate");
-    drop.classList.add("drop--show");
-
-    artImg.addEventListener("animationend", () => {
-      artImg.classList.remove("art__img--animate");
-    });
-    drop.addEventListener("transitionend", () => {
-      drop.classList.remove("drop--show");
-    });
-  }
 });
 
 nextButton.addEventListener("click", () => {
