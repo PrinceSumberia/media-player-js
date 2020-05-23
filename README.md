@@ -1,4 +1,4 @@
-# media-player-js
+# Media Player
 
 ### Media Player Made With Vanilla JS
 
