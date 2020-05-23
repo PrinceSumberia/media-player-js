@@ -19,6 +19,8 @@ const fileItem = document.querySelector(".filelist__item");
 
 let title, artist, image;
 let songs = [];
+let isPaused = true;
+let currentSongIndex = 0;
 
 const getMetaData2 = async (file) => {
   return await id3.fromUrl(file);
@@ -57,28 +59,8 @@ const loadData = (songIndex) => {
   });
 };
 
-// progressBar.classList.toggle("progress__bar--show");
-// progressBar.addEventListener("transitionend", () => {
-//   range.classList.toggle("range--show");
-// });
-
-// if (progressBar.classList.contains("progress__bar--show") === false) {
-//   range.classList.remove("range--show");
-// }
-
-// if (!isPaused) {
-//   artImg.classList.add("art__img--animate");
-
-//   artImg.addEventListener("animationend", () => {
-//     artImg.classList.remove("art__img--animate");
-//   });
-//   drop.addEventListener("transitionend", () => {
-//     drop.classList.remove("drop--show");
-//   });
-// }
-
 const playSong = () => {
-  startPlaying();
+  // startPlaying();
   if (isPaused) {
     song.play();
     progressBar.classList.add("progress__bar--show");
@@ -148,47 +130,53 @@ const changeStyles = (songIndex) => {
   }
 };
 
-let isPaused = true;
-let currentSongIndex = 0;
 const startPlaying = () => {
   let currentSong = songs[currentSongIndex];
   song.src = currentSong.url;
   artImg.setAttribute("src", currentSong.imageSrc);
   songTitle.innerText = currentSong.title;
   songSubTitle.innerText = currentSong.artist;
+  playSong();
 };
 
-// loadData(0);
-
+//================== Event Listeners =============================
 audioFile.addEventListener("change", (e) => {
   let files = e.target.files;
+  const initialSongsLength = songs.length;
   for (const file of files) {
     const result = getMetaData(file);
-    result.then((data) => {
-      let title = data.title.slice(0, data.title.search(/-|\(/)).trim();
-      let artist =
-        data.artist.search(/\(/) === -1
-          ? data.artist
-          : data.artist.slice(0, data.artist.search(/\(/)).trim();
-      songs.push({
-        title,
-        artist,
-        url: URL.createObjectURL(file),
-        imageSrc: getSongImage(data.images[0].data),
+    result
+      .then((data) => {
+        let title = data.title.slice(0, data.title.search(/-|\(/)).trim();
+        let artist =
+          data.artist.search(/\(/) === -1
+            ? data.artist
+            : data.artist.slice(0, data.artist.search(/\(/)).trim();
+        songs.push({
+          title,
+          artist,
+          url: URL.createObjectURL(file),
+          imageSrc: getSongImage(data.images[0].data),
+        });
+        currentSongIndex = songs.length - 1;
+        fileList.insertAdjacentHTML(
+          "beforeend",
+          `<li class="filelist__item" id=${songs.length - 1}>${title}</li>`
+        );
+      })
+      .then(() => {
+        if (initialSongsLength + Object.keys(files).length === songs.length) {
+          isPaused = true;
+          startPlaying();
+        }
       });
-      fileList.insertAdjacentHTML(
-        "beforeend",
-        `<li class="filelist__item" id=${songs.length - 1}>${title}</li>`
-      );
-    });
   }
-  startPlaying();
 });
 
 song.addEventListener("ended", () => changeSong("next"));
 
 playButton.addEventListener("click", () => {
-  playSong();
+  startPlaying();
 });
 
 nextButton.addEventListener("click", () => {
@@ -208,7 +196,7 @@ progressBar.addEventListener("change", () => {
 fileList.addEventListener("click", (e) => {
   currentSongIndex = Number(e.target.id);
   isPaused = true;
-  playSong();
+  startPlaying();
 });
 
 setInterval(updateProgressBar, 500);
