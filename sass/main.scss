@@ -1,11 +1,12 @@
 :root {
   --color-primary: #cbe7fc;
-  --blue-light: #9fd2fb;
-  --blue-dark: #61adf3;
+  --blue-light: rgb(159, 210, 251);
+  --blue-dark: rgb(97, 173, 243);
+  --blue-dark-1: rgb(159, 210, 251, .7);
   --swatch_4: #95a8de;
-  --swatch_5: #3d8ce1;
+  --swatch_5: hsl(211, 73%, 56%);
   --swatch_6: #2350ce;
-  --swatch_7: #ba77cc;
+  --pink-1: rgb(150, 169, 223, .5);
   --gradient-blue: linear-gradient(52deg, rgba(165, 219, 255, 1) 0%, rgba(231, 245, 254, 1) 95%);
   --gradient-pink: linear-gradient(52deg, rgba(185, 118, 203, 1) 0%, rgba(149, 168, 222, 1) 95%);
   --box-shadow-blue: 0 35rem 20rem 0rem rgba(159, 210, 251, .8);
@@ -43,7 +44,7 @@ body {
 }
 
 .sidebar {
-  flex: 0 0 30%;
+  flex: 0 0 32%;
   display: flex;
   margin-top: 15vh;
   margin-left: 2.7rem;
@@ -54,24 +55,34 @@ body {
 
 .files_container {
   padding: 2rem;
-  height: 50rem;
-  border: 1px solid black;
+  width: 10%;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  margin-left: auto;
   opacity: 0;
   visibility: hidden;
   transition: all .5s;
 
   &--show {
+    flex: 1;
     visibility: visible;
     opacity: 1;
+    width: 100%;
   }
 }
 
 .files__toggle {
+  z-index: 100;
   align-self: flex-start;
-  margin-top: 2rem;
+  margin-left: auto;
+  font-size: 3rem;
+  opacity: 50%;
+  transition: all .5s;
+
+  &:hover {
+    opacity: 100%;
+    animation: rotation 1.5s linear;
+  }
 }
 
 .player {
@@ -247,6 +258,7 @@ body {
   outline: none;
   border: none;
   margin: 1.5rem 0;
+
 }
 
 .audio_files::-webkit-file-upload-button {
@@ -254,19 +266,20 @@ body {
 }
 
 .audio_files::before {
-  content: 'Select some files';
-  display: inline-block;
+  content: 'Select Some Music Files';
+  font-family: inherit;
+  font-size: 1.7rem;
+  color: #fff;
+  display: block;
+  text-align: center;
   background: linear-gradient(top, #f9f9f9, #e3e3e3);
   border: 1px solid #999;
-  border-radius: 3px;
+  border-radius: .5rem;
   padding: 5px 8px;
   outline: none;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
-  text-shadow: 1px 1px #fff;
-  font-weight: 700;
-  font-size: 10pt;
 }
 
 .audio_files:hover::before {
@@ -279,16 +292,13 @@ body {
 
 .filelist {
   padding: 2rem;
-  // background-color: black;
   list-style: none;
-  flex: 1;
-  // border: 1px solid black;
 
   &__item {
     text-transform: capitalize;
     width: 100%;
     padding: .5rem 2rem;
-    background-color: rgba(97, 173, 243, .5);
+    background-color: var(--blue-dark-1);
     border-radius: 1rem;
     margin: 1rem 0;
 

@@ -15,7 +15,6 @@ const range = document.querySelector(".range");
 const drop = document.querySelector(".drop");
 const audioFile = document.querySelector(".audio_files");
 const fileList = document.querySelector(".filelist");
-const fileItem = document.querySelector(".filelist__item");
 const fileListContainer = document.querySelector(".files_container");
 const filesViewToggle = document.querySelector(".files__toggle");
 
@@ -94,12 +93,19 @@ const updateProgressBar = () => {
 };
 
 const changeStyles = (songIndex) => {
-  if (songIndex % 2 === 0) {
+  const fileItem = document.querySelectorAll(".filelist__item");
+  if (songIndex % 2 !== 0) {
     body.style.backgroundImage = `var(--gradient-pink)`;
     player.style.boxShadow = `var(--box-shadow-pink)`;
+    fileItem.forEach((el) => {
+      el.style.backgroundColor = `var(--pink-1)`;
+    });
   } else {
     body.style.backgroundImage = `var(--gradient-blue)`;
     player.style.boxShadow = `var(--box-shadow-blue)`;
+    fileItem.forEach((el) => {
+      el.style.backgroundColor = `var(--blue-dark-1)`;
+    });
   }
 };
 
@@ -120,7 +126,6 @@ audioFile.addEventListener("change", (e) => {
     const result = getMetaData(file);
     result
       .then((data) => {
-        console.log(getSongImage(data.images[0].data));
         let title = data.title
           .slice(0, data.title.search(/ft|FT|fT|Ft|-|\(/))
           .trim()
@@ -180,6 +185,7 @@ fileList.addEventListener("click", (e) => {
   currentSongIndex = Number(e.target.id);
   isPaused = true;
   startPlaying();
+  changeStyles(Number(currentSongIndex));
 });
 
 setInterval(updateProgressBar, 500);
